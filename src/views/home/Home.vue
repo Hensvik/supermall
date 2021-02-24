@@ -3,6 +3,13 @@
     <nav-bar class="home-nav"><div slot="center">购物街</div></nav-bar>
     <!--<home-swiper :banners="banners"/>
     <recommend-view :recommends="recommends"/>-->
+    <swiper>
+      <swiper-item v-for="item in banners">
+        <a :href="item.link">
+          <img :src="item.image" alt="">
+        </a>
+      </swiper-item>
+    </swiper>
   </div>
 </template>
 
@@ -11,12 +18,15 @@
   // import HomeSwiper from './childComps/HomeSwiper'
   // import RecommendView from './childComps/RecommendView'
   //
-   import {getHomeMultidata} from "network/home";
+  import {Swiper,SwiperItem} from '@/components/common/swiper';
+   import {getHomeMultidata} from "@/network/home";
 
   export default {
     name: "Home",
     components: {
        NavBar,
+      Swiper,
+      SwiperItem
       // HomeSwiper,
       // RecommendView
     },
@@ -29,6 +39,7 @@
     created() {
       // 1.请求多个数据
       getHomeMultidata().then(res => {
+        console.log(res)
         // this.result = res;
         this.banners = res.data.banner.list;
         this.recommends = res.data.recommend.list;
